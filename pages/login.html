@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Acceso administrativo | Comité San Miguel</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/global.css">
+
+    <style>
+        .pagina-login {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            background: var(--color-gris-claro);
+        }
+
+        .login-contenedor {
+            width: 100%;
+            max-width: 440px;
+            background: var(--color-blanco);
+            padding: 40px;
+            border-top: 5px solid var(--color-rojo);
+        }
+
+        .login-contenedor h2 {
+            font-family: var(--fuente-titulos);
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+
+        .login-contenedor > p {
+            color: var(--color-gris-texto);
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .login-campo {
+            margin-bottom: 20px;
+        }
+
+        .login-campo label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .login-campo input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid var(--color-gris);
+            font-family: var(--fuente-texto);
+            font-size: 14px;
+        }
+
+        .login-campo input:focus {
+            outline: 2px solid var(--color-rojo);
+            outline-offset: 2px;
+        }
+
+        .boton-login {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            background: var(--color-negro);
+            color: var(--color-blanco);
+            font-weight: 800;
+            cursor: pointer;
+            font-family: var(--fuente-texto);
+        }
+
+        .boton-login:hover {
+            background: var(--color-rojo);
+        }
+
+        .login-volver {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            color: var(--color-gris-texto);
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+        @media (max-width: 500px) {
+            .login-contenedor {
+                padding: 28px 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="encabezado">
+
+        <div class="encabezado-superior">
+            <span>ORGANIZACIÓN · SAN MIGUEL</span>
+            <span>BUENOS AIRES · ARGENTINA</span>
+        </div>
+
+        <div class="marca">
+            <h1>COMITÉ SAN MIGUEL</h1>
+            <p>ORGANIZACIÓN Y PARTICIPACIÓN</p>
+        </div>
+
+        <div class="franja-roja">
+            HACIA LA CONSTRUCCIÓN DEL PARTIDO DE LA NUEVA CLASE TRABAJADORA
+        </div>
+
+    </header>
+
+    <main class="pagina-login">
+
+        <section class="login-contenedor">
+
+            <span class="etiqueta">ÁREA PRIVADA</span>
+
+            <h2>ACCESO ADMINISTRATIVO</h2>
+
+            <p>
+                Ingresá con tu cuenta autorizada para administrar
+                los contenidos del sitio.
+            </p>
+
+            <form id="form-login">
+
+                <div class="login-campo">
+                    <label for="email">Correo electrónico</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="usuario@correo.com"
+                        autocomplete="username"
+                        required
+                    >
+                </div>
+
+                <div class="login-campo">
+                    <label for="password">Contraseña</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Ingresá tu contraseña"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="boton-login">
+                    INGRESAR
+                </button>
+
+            </form>
+
+            <a href="../index.html" class="login-volver">
+                ← VOLVER AL SITIO
+            </a>
+
+        </section>
+
+    </main>
+
+    <footer class="pie-pagina">
+        <div class="contenedor">
+            <p>COMITÉ SAN MIGUEL</p>
+            <span>ORGANIZACIÓN · SAN MIGUEL · BUENOS AIRES</span>
+        </div>
+    </footer>
+
+</body>
+</html>
