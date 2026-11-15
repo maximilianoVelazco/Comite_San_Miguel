@@ -1,0 +1,314 @@
+
+/* =========================================
+   COMITÉ SAN MIGUEL
+   Identidad visual general
+   Estética editorial + gráfica de los 90
+========================================= */
+
+/* 1. VARIABLES GENERALES */
+
+:root {
+    /* Colores */
+    --color-negro: #171717;
+    --color-blanco: #FFFFFF;
+    --color-gris-claro: #F4F4F1;
+    --color-gris: #E5E5E5;
+    --color-gris-texto: #666666;
+    --color-rojo: #D92727;
+    --color-rojo-oscuro: #A91E1E;
+
+    /* Tipografías */
+    --fuente-titulos: 'Archivo Black', sans-serif;
+    --fuente-texto: 'Inter', sans-serif;
+
+    /* Medidas */
+    --ancho-contenido: 1200px;
+    --radio: 3px;
+
+    /* Espaciado */
+    --espacio-xs: 8px;
+    --espacio-sm: 16px;
+    --espacio-md: 24px;
+    --espacio-lg: 40px;
+    --espacio-xl: 64px;
+}
+
+/* 2. CONFIGURACIÓN GENERAL */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--fuente-texto);
+    background-color: var(--color-blanco);
+    color: var(--color-negro);
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+/* 3. TÍTULOS */
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--fuente-titulos);
+    font-weight: normal;
+    line-height: 1.15;
+    color: var(--color-negro);
+}
+
+h1 {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+}
+
+h2 {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+/* 4. ENLACES Y BOTONES */
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.boton {
+    display: inline-block;
+    padding: 12px 22px;
+    background-color: var(--color-rojo);
+    color: var(--color-blanco);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    border: 2px solid var(--color-rojo);
+    transition: 0.2s ease;
+}
+
+.boton:hover {
+    background-color: var(--color-rojo-oscuro);
+    border-color: var(--color-rojo-oscuro);
+}
+
+/* 5. CONTENEDORES */
+
+.contenedor {
+    width: min(92%, var(--ancho-contenido));
+    margin-inline: auto;
+}
+
+.seccion {
+    padding-block: var(--espacio-xl);
+}
+
+/* 6. ELEMENTOS EDITORIALES */
+
+.etiqueta {
+    display: inline-block;
+    color: var(--color-rojo);
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.separador {
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-negro);
+    border: 0;
+    margin-block: var(--espacio-md);
+}
+
+.texto-secundario {
+    color: var(--color-gris-texto);
+}
+
+/* 7. IMÁGENES */
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+.imagen-editorial {
+    width: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
+}
+
+/* 8. PIE DE PÁGINA */
+
+footer {
+    background-color: var(--color-negro);
+    color: var(--color-blanco);
+    padding: var(--espacio-lg) 0;
+}
+
+footer a {
+    color: var(--color-blanco);
+}
+
+/* 9. ADAPTACIÓN A CELULARES */
+
+@media (max-width: 768px) {
+    :root {
+        --espacio-xl: 40px;
+    }
+
+    body {
+        font-size: 15px;
+    }
+
+    .contenedor {
+        width: 90%;
+    }
+}
+
+
+/* =========================================
+   ENCABEZADO EDITORIAL
+========================================= */
+
+.encabezado {
+    background-color: var(--color-blanco);
+    padding-top: 18px;
+}
+
+.encabezado-superior {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--color-negro);
+}
+
+.marca {
+    padding-block: 25px 20px;
+}
+
+.marca h1 {
+    font-size: clamp(2.5rem, 8vw, 6.5rem);
+    letter-spacing: -3px;
+    white-space: nowrap;
+}
+
+.marca p {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--color-gris-texto);
+}
+
+.franja-roja {
+    background-color: var(--color-rojo);
+    color: var(--color-blanco);
+    padding: 12px 16px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+/* =========================================
+   NAVEGACIÓN
+========================================= */
+
+.navegacion {
+    background-color: var(--color-negro);
+}
+
+.navegacion ul {
+    display: flex;
+    list-style: none;
+    gap: 35px;
+    padding-block: 16px;
+}
+
+.navegacion a {
+    color: var(--color-blanco);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: color 0.2s ease;
+}
+
+.navegacion a:hover {
+    color: var(--color-rojo);
+}
+
+/* =========================================
+   PORTADA
+========================================= */
+
+.portada {
+    padding-block: 80px;
+    min-height: 350px;
+}
+
+.portada h2 {
+    max-width: 850px;
+    margin-block: 20px;
+}
+
+.portada p {
+    max-width: 600px;
+    color: var(--color-gris-texto);
+    margin-top: 15px;
+}
+
+/* =========================================
+   ADAPTACIÓN A CELULARES
+========================================= */
+
+@media (max-width: 768px) {
+
+    .encabezado-superior {
+        font-size: 9px;
+        gap: 10px;
+    }
+
+    .marca h1 {
+        font-size: clamp(2rem, 9vw, 4rem);
+        letter-spacing: -1.5px;
+        white-space: normal;
+    }
+
+    .marca p {
+        font-size: 11px;
+    }
+
+    .franja-roja {
+        font-size: 10px;
+        line-height: 1.5;
+    }
+
+    .navegacion ul {
+        gap: 18px;
+        flex-wrap: wrap;
+    }
+
+    .navegacion a {
+        font-size: 10px;
+    }
+
+    .portada {
+        padding-block: 50px;
+    }
+}
