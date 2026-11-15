@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Agenda | Comité San Miguel</title>
+    <meta name="description" content="Agenda de reuniones, actividades y eventos del Comité San Miguel.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/calendario.css">
+</head>
+
+<body>
+
+    <header class="encabezado">
+
+        <div class="encabezado-superior">
+            <span>ORGANIZACIÓN · SAN MIGUEL</span>
+            <span>BUENOS AIRES · ARGENTINA</span>
+        </div>
+
+        <div class="marca">
+            <h1>COMITÉ SAN MIGUEL</h1>
+            <p>ORGANIZACIÓN Y PARTICIPACIÓN</p>
+        </div>
+
+        <div class="franja-roja">
+            HACIA LA CONSTRUCCIÓN DEL PARTIDO DE LA NUEVA CLASE TRABAJADORA
+        </div>
+
+        <nav class="navegacion">
+            <a href="../index.html">INICIO</a>
+            <a href="articulo.html">ARTÍCULOS</a>
+            <a href="eventos.html" class="activo">AGENDA</a>
+            <a href="contacto.html">CONTACTO</a>
+        </nav>
+
+    </header>
+
+    <main class="contenedor pagina-agenda">
+
+        <section class="titulo-seccion">
+            <span class="etiqueta">ACTIVIDADES</span>
+            <h2>AGENDA</h2>
+            <p>
+                Consultá las próximas reuniones, actividades
+                institucionales, eventos y fechas importantes.
+            </p>
+        </section>
+
+        <section class="categorias-eventos">
+
+            <h2>CATEGORÍAS</h2>
+
+            <div class="lista-categorias">
+                <span class="categoria categoria-reuniones">
+                    REUNIONES
+                </span>
+
+                <span class="categoria categoria-institucional">
+                    ACTIVIDADES INSTITUCIONALES
+                </span>
+
+                <span class="categoria categoria-eventos">
+                    EVENTOS
+                </span>
+
+                <span class="categoria categoria-fechas">
+                    FECHAS IMPORTANTES
+                </span>
+            </div>
+
+        </section>
+
+        <section class="calendario-contenedor">
+
+            <div class="calendario-cabecera">
+                <h2>CALENDARIO DE ACTIVIDADES</h2>
+                <p>CONSULTA PÚBLICA</p>
+            </div>
+
+            <div class="calendario-navegacion">
+                <button type="button" id="mes-anterior">
+                    ← ANTERIOR
+                </button>
+
+                <h3 id="mes-actual">MES Y AÑO</h3>
+
+                <button type="button" id="mes-siguiente">
+                    SIGUIENTE →
+                </button>
+            </div>
+
+            <div class="calendario-grilla" id="calendario">
+
+                <div class="dia-semana">LUN</div>
+                <div class="dia-semana">MAR</div>
+                <div class="dia-semana">MIÉ</div>
+                <div class="dia-semana">JUE</div>
+                <div class="dia-semana">VIE</div>
+                <div class="dia-semana">SÁB</div>
+                <div class="dia-semana">DOM</div>
+
+            </div>
+
+        </section>
+
+        <section class="proximas-actividades">
+
+            <div class="encabezado-listado">
+                <h2>PRÓXIMAS ACTIVIDADES</h2>
+                <span>AGENDA PÚBLICA</span>
+            </div>
+
+            <div id="lista-eventos">
+
+                <div class="sin-eventos">
+                    <p>
+                        Todavía no hay actividades publicadas.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="pie-pagina">
+        <div class="contenedor">
+            <p>COMITÉ SAN MIGUEL</p>
+            <span>ORGANIZACIÓN · SAN MIGUEL · BUENOS AIRES</span>
+        </div>
+    </footer>
+
+    <script src="../js/calendario.js"></script>
+
+</body>
+</html>
