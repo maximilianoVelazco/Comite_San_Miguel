@@ -270,9 +270,7 @@ if (resultado.error) throw resultado.error;
 
 articuloEnEdicion = null;
 
-        if (error) {
-            throw error;
-        }
+        if (resultado.error) throw resultado.error;
 
        mensajeArticulos.textContent = "Artículo guardado correctamente.";
 
