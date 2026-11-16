@@ -1,3 +1,4 @@
+
 const articuloCompleto = document.getElementById("articulo-completo");
 const mensajeArticulo = document.getElementById("mensaje-articulo");
 
@@ -12,7 +13,7 @@ async function cargarArticulo() {
 
         const { data, error } = await supabaseClient
             .from("articulos")
-            .select("titulo, resumen, contenido, categoria, creado_en")
+            .select("titulo, resumen, contenido, categoria, creado_en, imagen_url")
             .eq("id", id)
             .eq("estado", "publicado")
             .single();
@@ -21,20 +22,46 @@ async function cargarArticulo() {
 
         articuloCompleto.innerHTML = "";
 
+        // CATEGORÍA
         const categoria = document.createElement("span");
         categoria.className = "etiqueta";
         categoria.textContent = data.categoria.toUpperCase();
 
+        // TÍTULO
         const titulo = document.createElement("h1");
         titulo.textContent = data.titulo;
 
+        // FECHA
         const fecha = document.createElement("p");
         fecha.className = "fecha-articulo";
         fecha.textContent = new Date(data.creado_en).toLocaleDateString("es-AR");
 
+        // IMAGEN DE PORTADA
+        if (data.imagen_url) {
+            const imagen = document.createElement("img");
+            imagen.src = data.imagen_url;
+            imagen.alt = "Imagen de portada: " + data.titulo;
+            imagen.className = "imagen-portada-articulo";
+
+            articuloCompleto.appendChild(categoria);
+            articuloCompleto.appendChild(titulo);
+            articuloCompleto.appendChild(fecha);
+            articuloCompleto.appendChild(imagen);
+        } else {
+            articuloCompleto.appendChild(categoria);
+            articuloCompleto.appendChild(titulo);
+            articuloCompleto.appendChild(fecha);
+        }
+
+        // RESUMEN
         const resumen = document.createElement("p");
         resumen.textContent = data.resumen || "";
 
+        if (data.resumen) {
+            articuloCompleto.appendChild(resumen);
+        }
+
+        // CONTENIDO
         const contenido = document.createElement("div");
         contenido.className = "contenido-completo";
 
@@ -65,7 +92,9 @@ async function cargarArticulo() {
                     return;
                 }
 
-                const nuevoElemento = document.createElement(etiqueta.toLowerCase());
+                const nuevoElemento = document.createElement(
+                    etiqueta.toLowerCase()
+                );
 
                 if (etiqueta === "A") {
                     const enlace = nodo.getAttribute("href") || "";
@@ -84,20 +113,13 @@ async function cargarArticulo() {
 
         copiarContenido(contenidoSeguro.body, contenido);
 
-        articuloCompleto.appendChild(categoria);
-        articuloCompleto.appendChild(titulo);
-        articuloCompleto.appendChild(fecha);
-
-        if (data.resumen) {
-            articuloCompleto.appendChild(resumen);
-        }
-
         articuloCompleto.appendChild(contenido);
 
         document.title = data.titulo + " | Comité San Miguel";
 
     } catch (error) {
         console.error("Error al cargar el artículo:", error);
+
         mensajeArticulo.textContent =
             "No se pudo encontrar este artículo o ya no está publicado.";
     }
