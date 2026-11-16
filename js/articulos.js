@@ -1,4 +1,8 @@
 
+// =====================================
+// EDITOR VISUAL QUILL
+// =====================================
+
 let editorArticulo = null;
 
 const elementoEditor = document.getElementById("editor-articulo");
@@ -17,12 +21,26 @@ if (elementoEditor && typeof Quill !== "undefined") {
             ]
         }
     });
-} else {
-    console.error("No se pudo inicializar el editor Quill.");
 }
 
+// =====================================
+// ELEMENTOS DEL FORMULARIO
+// =====================================
+
+const formularioArticulo = document.getElementById("form-articulo");
 const listaArticulos = document.getElementById("lista-articulos");
-const botonNuevoArticulo = document.getElementById("btn-nuevo-articulo");
+const mensajeArticulos = document.getElementById("mensaje-articulos");
+
+// Retiramos el botón anterior, que ya no necesitamos.
+const botonAnterior = document.getElementById("btn-nuevo-articulo");
+
+if (botonAnterior) {
+    botonAnterior.remove();
+}
+
+// =====================================
+// CARGAR ARTÍCULOS
+// =====================================
 
 async function cargarArticulos() {
     listaArticulos.textContent = "Cargando publicaciones...";
@@ -40,7 +58,7 @@ async function cargarArticulos() {
 
     listaArticulos.innerHTML = "";
 
-    if (data.length === 0) {
+    if (!data || data.length === 0) {
         listaArticulos.textContent = "Todavía no hay publicaciones registradas.";
         return;
     }
@@ -66,8 +84,79 @@ async function cargarArticulos() {
     });
 }
 
-botonNuevoArticulo.addEventListener("click", function () {
-    alert("El formulario de creación de artículos lo construiremos en el siguiente paso.");
+// =====================================
+// GUARDAR ARTÍCULO
+// =====================================
+
+formularioArticulo.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    mensajeArticulos.textContent = "";
+
+    const titulo = document.getElementById("titulo").value.trim();
+    const resumen = document.getElementById("resumen").value.trim();
+    const categoria = document.getElementById("categoria").value;
+    const estado = document.getElementById("estado").value;
+    const contenido = editorArticulo.root.innerHTML;
+    const textoContenido = editorArticulo.getText().trim();
+
+    if (!titulo || !categoria || !textoContenido) {
+        mensajeArticulos.textContent =
+            "Completá el título, la categoría y el contenido.";
+        return;
+    }
+
+    const botonGuardar = formularioArticulo.querySelector(
+        'button[type="submit"]'
+    );
+
+    botonGuardar.disabled = true;
+    botonGuardar.textContent = "GUARDANDO...";
+
+    try {
+        const { data: sesion, error: errorSesion } =
+            await supabaseClient.auth.getUser();
+
+        if (errorSesion || !sesion.user) {
+            throw new Error("No hay una sesión administrativa activa.");
+        }
+
+        const { error } = await supabaseClient
+            .from("articulos")
+            .insert({
+                titulo: titulo,
+                resumen: resumen,
+                contenido: contenido,
+                categoria: categoria,
+                estado: estado,
+                autor: sesion.user.id
+            });
+
+        if (error) {
+            throw error;
+        }
+
+        mensajeArticulos.textContent =
+            "Artículo guardado correctamente.";
+
+        formularioArticulo.reset();
+        editorArticulo.setText("");
+
+        await cargarArticulos();
+
+    } catch (error) {
+        console.error("Error al guardar el artículo:", error);
+
+        mensajeArticulos.textContent =
+            "No se pudo guardar el artículo. Revisá los datos y los permisos.";
+    } finally {
+        botonGuardar.disabled = false;
+        botonGuardar.textContent = "GUARDAR ARTÍCULO";
+    }
 });
+
+// =====================================
+// INICIO
+// =====================================
 
 cargarArticulos();
