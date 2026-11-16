@@ -29,7 +29,9 @@ if (elementoEditor && typeof Quill !== "undefined") {
 
 const formularioArticulo = document.getElementById("form-articulo");
 let articuloEnEdicion = null;
+let imagenActual = null;
 const listaArticulos = document.getElementById("lista-articulos");
+const inputImagen = document.getElementById("imagen");
 const mensajeArticulos = document.getElementById("mensaje-articulos");
 
 // Retiramos el botón anterior, que ya no necesitamos.
@@ -51,6 +53,7 @@ function editarArticulo(articulo) {
     editorArticulo.root.innerHTML = articulo.contenido;
 
     articuloEnEdicion = articulo.id;
+    imagenActual = articulo.imagen_url || null;
 
 mensajeArticulos.textContent = "Editando: " + articulo.titulo;
 
@@ -152,6 +155,40 @@ async function cargarArticulos() {
     });
 }
 
+
+
+
+    async function subirImagen(archivo) {
+    const nombreArchivo =
+        Date.now() + "-" +
+        archivo.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+
+    const { data, error } = await supabaseClient
+        .storage
+        .from("articulos")
+        .upload(nombreArchivo, archivo, {
+            cacheControl: "3600",
+            upsert: false,
+            contentType: archivo.type
+        });
+
+    if (error) throw error;
+
+    const { data: urlImagen } = supabaseClient
+        .storage
+        .from("articulos")
+        .getPublicUrl(data.path);
+
+    return urlImagen.publicUrl;
+}
+
+
+
+
+
+
+
+
 // =====================================
 // GUARDAR ARTÍCULO
 // =====================================
@@ -189,6 +226,17 @@ formularioArticulo.addEventListener("submit", async function (event) {
             throw new Error("No hay una sesión administrativa activa.");
         }
 
+
+
+        let imagenParaGuardar = imagenActual;
+
+        const archivoImagen = inputImagen.files[0];
+
+        if (archivoImagen) {
+            imagenParaGuardar = await subirImagen(archivoImagen);
+        }
+
+
         let resultado;
 
 if (articuloEnEdicion) {
@@ -200,6 +248,7 @@ if (articuloEnEdicion) {
             contenido,
             categoria,
             estado,
+            imagen_url: imagenParaGuardar,
             actualizado_en: new Date().toISOString()
         })
         .eq("id", articuloEnEdicion);
@@ -212,7 +261,8 @@ if (articuloEnEdicion) {
             contenido,
             categoria,
             estado,
-            autor: sesion.user.id
+            autor: sesion.user.id,
+            imagen_url: imagenParaGuardar
         });
 }
 
@@ -229,7 +279,8 @@ articuloEnEdicion = null;
         formularioArticulo.reset();
         editorArticulo.setText("");
         articuloEnEdicion = null;
-
+        imagenActual = null;
+        inputImagen.value = "";
         
         botonGuardar.textContent = "GUARDAR ARTÍCULO";
 
