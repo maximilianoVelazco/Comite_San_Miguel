@@ -58,6 +58,13 @@
 });
 
 encabezado.appendChild(botonSalir);
+    const botonUsuarios = document.getElementById("btn-usuarios");
+
+    if (botonUsuarios) {
+    botonUsuarios.addEventListener("click", function () {
+        window.location.href = "usuarios.html";
+    });
+}
         }
 
     } catch (error) {
