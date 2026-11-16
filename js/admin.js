@@ -34,6 +34,7 @@
 
         if (encabezado) {
             const usuario = document.createElement("p");
+
             usuario.textContent =
                 "Sesión iniciada: " + usuarioActual.email +
                 " | Rol: " + perfil.rol;
@@ -41,30 +42,32 @@
             encabezado.appendChild(usuario);
 
             const botonSalir = document.createElement("button");
-                botonSalir.textContent = "CERRAR SESIÓN";
-                botonSalir.style.marginTop = "15px";
-                botonSalir.style.padding = "10px 18px";
-                botonSalir.style.cursor = "pointer";
 
-                botonSalir.addEventListener("click", async function () {
-                    const { error } = await supabaseClient.auth.signOut();
+            botonSalir.textContent = "CERRAR SESIÓN";
+            botonSalir.style.marginTop = "15px";
+            botonSalir.style.padding = "10px 18px";
+            botonSalir.style.cursor = "pointer";
 
-                    if (error) {
-                        alert("No se pudo cerrar la sesión.");
-                        return;
-                    }
+            botonSalir.addEventListener("click", async function () {
+                const { error } = await supabaseClient.auth.signOut();
 
-                    window.location.replace("../pages/login.html");
-});
+                if (error) {
+                    alert("No se pudo cerrar la sesión.");
+                    return;
+                }
 
-encabezado.appendChild(botonSalir);
-    const botonUsuarios = document.getElementById("btn-usuarios");
+                window.location.replace("../pages/login.html");
+            });
 
-    if (botonUsuarios) {
-    botonUsuarios.addEventListener("click", function () {
-        window.location.href = "usuarios.html";
-    });
-}
+            encabezado.appendChild(botonSalir);
+        }
+
+        const botonUsuarios = document.getElementById("btn-usuarios");
+
+        if (botonUsuarios) {
+            botonUsuarios.addEventListener("click", function () {
+                window.location.href = "usuarios.html";
+            });
         }
 
     } catch (error) {
