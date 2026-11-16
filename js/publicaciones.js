@@ -52,10 +52,34 @@ async function cargarPublicaciones() {
             contenido.appendChild(resumen);
             contenido.appendChild(fecha);
 
+            
             tarjeta.appendChild(imagen);
             tarjeta.appendChild(contenido);
 
+            // Permitir abrir el artículo
+            tarjeta.style.cursor = "pointer";
+            tarjeta.setAttribute("tabindex", "0");
+            tarjeta.setAttribute("role", "link");
+            tarjeta.setAttribute("aria-label", "Leer artículo: " + articulo.titulo);
+
+            function abrirArticulo() {
+                window.location.href =
+                    "leer-articulo.html?id=" + encodeURIComponent(articulo.id);
+            }
+
+            tarjeta.addEventListener("click", abrirArticulo);
+
+            tarjeta.addEventListener("keydown", function(event) {
+                if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    abrirArticulo();
+                }
+            });
+
             grillaArticulos.appendChild(tarjeta);
+
+
+
         });
 
     } catch (error) {
