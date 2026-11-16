@@ -1,4 +1,18 @@
 
+const editorArticulo = new Quill("#editor-articulo", {
+    theme: "snow",
+    placeholder: "Escribí aquí el contenido del artículo...",
+    modules: {
+        toolbar: [
+            [{ header: [1, 2, 3, false] }],
+            ["bold", "italic", "underline", "strike"],
+            [{ list: "ordered" }, { list: "bullet" }],
+            ["blockquote", "link"],
+            ["clean"]
+        ]
+    }
+});
+
 const listaArticulos = document.getElementById("lista-articulos");
 const botonNuevoArticulo = document.getElementById("btn-nuevo-articulo");
 

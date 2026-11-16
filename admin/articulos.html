@@ -12,6 +12,9 @@
 
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/admin.css">
+
+    <!-- Editor visual Quill -->
+    <link href="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css" rel="stylesheet">
 </head>
 <body>
 
@@ -32,6 +35,42 @@
         <section class="modulo-admin">
             <h3>PUBLICACIONES</h3>
             <p>Desde aquí podrás crear, editar y administrar artículos.</p>
+
+
+            <form id="form-articulo">
+
+                <label for="titulo">Título del artículo</label>
+                <input type="text" id="titulo" required>
+
+                <label for="resumen">Resumen</label>
+                <textarea id="resumen"></textarea>
+
+                <label for="categoria">Categoría</label>
+                <select id="categoria" required>
+                    <option value="">Seleccionar categoría</option>
+                    <option value="Actualidad">Actualidad</option>
+                    <option value="Análisis">Análisis</option>
+                    <option value="Institucional">Institucional</option>
+                </select>
+
+                <label>Contenido del artículo</label>
+                <div id="editor-articulo"></div>
+
+                <label for="estado">Estado</label>
+                <select id="estado">
+                    <option value="borrador">Guardar como borrador</option>
+                    <option value="publicado">Publicar artículo</option>
+                </select>
+
+                <button type="submit" class="boton-admin">
+                    GUARDAR ARTÍCULO
+                </button>
+
+            </form>
+
+
+
+
 
             <button id="btn-nuevo-articulo" class="boton-admin">
                 NUEVO ARTÍCULO
@@ -60,6 +99,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/admin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
     <script src="../js/articulos.js"></script>
 
 </body>

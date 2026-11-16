@@ -101,3 +101,50 @@
         font-size: 24px;
     }
 }
+
+/* FORMULARIO DE ARTÍCULOS */
+
+#form-articulo {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 25px;
+    margin-bottom: 35px;
+}
+
+#form-articulo label {
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+#form-articulo input,
+#form-articulo textarea,
+#form-articulo select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-family: var(--fuente-texto);
+    font-size: 15px;
+}
+
+#form-articulo textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+#editor-articulo {
+    background: #fff;
+    min-height: 300px;
+    font-family: var(--fuente-texto);
+    font-size: 16px;
+}
+
+#form-articulo .ql-toolbar {
+    background: #f4f4f1;
+}
+
+#form-articulo .boton-admin {
+    align-self: flex-start;
+    margin-top: 15px;
+}
