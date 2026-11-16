@@ -39,6 +39,25 @@
                 " | Rol: " + perfil.rol;
 
             encabezado.appendChild(usuario);
+
+            const botonSalir = document.createElement("button");
+                botonSalir.textContent = "CERRAR SESIÓN";
+                botonSalir.style.marginTop = "15px";
+                botonSalir.style.padding = "10px 18px";
+                botonSalir.style.cursor = "pointer";
+
+                botonSalir.addEventListener("click", async function () {
+                    const { error } = await supabaseClient.auth.signOut();
+
+                    if (error) {
+                        alert("No se pudo cerrar la sesión.");
+                        return;
+                    }
+
+                    window.location.replace("../pages/login.html");
+});
+
+encabezado.appendChild(botonSalir);
         }
 
     } catch (error) {
