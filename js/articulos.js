@@ -28,6 +28,7 @@ if (elementoEditor && typeof Quill !== "undefined") {
 // =====================================
 
 const formularioArticulo = document.getElementById("form-articulo");
+let articuloEnEdicion = null;
 const listaArticulos = document.getElementById("lista-articulos");
 const mensajeArticulos = document.getElementById("mensaje-articulos");
 
@@ -37,6 +38,45 @@ const botonAnterior = document.getElementById("btn-nuevo-articulo");
 if (botonAnterior) {
     botonAnterior.remove();
 }
+
+
+
+
+function editarArticulo(articulo) {
+    document.getElementById("titulo").value = articulo.titulo;
+    document.getElementById("resumen").value = articulo.resumen || "";
+    document.getElementById("categoria").value = articulo.categoria;
+    document.getElementById("estado").value = articulo.estado;
+
+    editorArticulo.root.innerHTML = articulo.contenido;
+
+    articuloEnEdicion = articulo.id;
+
+mensajeArticulos.textContent = "Editando: " + articulo.titulo;
+
+formularioArticulo.querySelector('button[type="submit"]').textContent = "ACTUALIZAR ARTÍCULO";;
+}
+
+async function eliminarArticulo(id) {
+    const confirmar = confirm("¿Estás seguro de que querés eliminar este artículo?");
+
+    if (!confirmar) return;
+
+    const { error } = await supabaseClient
+        .from("articulos")
+        .delete()
+        .eq("id", id);
+
+    if (error) {
+        console.error("Error al eliminar:", error);
+        mensajeArticulos.textContent = "No se pudo eliminar el artículo.";
+        return;
+    }
+
+    mensajeArticulos.textContent = "Artículo eliminado correctamente.";
+    await cargarArticulos();
+}
+
 
 // =====================================
 // CARGAR ARTÍCULOS
@@ -73,14 +113,42 @@ async function cargarArticulos() {
         const categoria = document.createElement("p");
         categoria.textContent = "Categoría: " + articulo.categoria;
 
+        
+
         const estado = document.createElement("p");
-        estado.textContent = "Estado: " + articulo.estado;
+            estado.textContent = "Estado: " + articulo.estado;
 
-        tarjeta.appendChild(titulo);
-        tarjeta.appendChild(categoria);
-        tarjeta.appendChild(estado);
+            // Botón EDITAR
+            const botonEditar = document.createElement("button");
+            botonEditar.textContent = "EDITAR";
+            botonEditar.className = "boton-admin";
+            botonEditar.type = "button";
 
-        listaArticulos.appendChild(tarjeta);
+            botonEditar.addEventListener("click", function () {
+                editarArticulo(articulo);
+            });
+
+            // Botón ELIMINAR
+            const botonEliminar = document.createElement("button");
+            botonEliminar.textContent = "ELIMINAR";
+            botonEliminar.className = "boton-admin";
+            botonEliminar.type = "button";
+
+            botonEliminar.addEventListener("click", function () {
+                eliminarArticulo(articulo.id);
+            });
+
+            tarjeta.appendChild(titulo);
+            tarjeta.appendChild(categoria);
+            tarjeta.appendChild(estado);
+            tarjeta.appendChild(botonEditar);
+            tarjeta.appendChild(botonEliminar);
+
+            listaArticulos.appendChild(tarjeta);
+
+
+
+
     });
 }
 
@@ -121,29 +189,51 @@ formularioArticulo.addEventListener("submit", async function (event) {
             throw new Error("No hay una sesión administrativa activa.");
         }
 
-        const { error } = await supabaseClient
-            .from("articulos")
-            .insert({
-                titulo: titulo,
-                resumen: resumen,
-                contenido: contenido,
-                categoria: categoria,
-                estado: estado,
-                autor: sesion.user.id
-            });
+        let resultado;
+
+if (articuloEnEdicion) {
+    resultado = await supabaseClient
+        .from("articulos")
+        .update({
+            titulo,
+            resumen,
+            contenido,
+            categoria,
+            estado,
+            actualizado_en: new Date().toISOString()
+        })
+        .eq("id", articuloEnEdicion);
+} else {
+    resultado = await supabaseClient
+        .from("articulos")
+        .insert({
+            titulo,
+            resumen,
+            contenido,
+            categoria,
+            estado,
+            autor: sesion.user.id
+        });
+}
+
+if (resultado.error) throw resultado.error;
+
+articuloEnEdicion = null;
 
         if (error) {
             throw error;
         }
 
-        mensajeArticulos.textContent =
-            "Artículo guardado correctamente.";
+       mensajeArticulos.textContent = "Artículo guardado correctamente.";
 
         formularioArticulo.reset();
         editorArticulo.setText("");
+        articuloEnEdicion = null;
+
+        
+        botonGuardar.textContent = "GUARDAR ARTÍCULO";
 
         await cargarArticulos();
-
     } catch (error) {
         console.error("Error al guardar el artículo:", error);
 
