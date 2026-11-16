@@ -1,18 +1,22 @@
+
 const grillaArticulos = document.getElementById("grilla-articulos");
 const mensajePublicaciones = document.getElementById("mensaje-publicaciones");
 
-
+// =====================================
+// CARGAR ARTÍCULO DESTACADO
+// =====================================
 
 async function cargarDestacado() {
     const titulo = document.getElementById("destacado-titulo");
     const resumen = document.getElementById("destacado-resumen");
     const fecha = document.getElementById("destacado-fecha");
     const enlace = document.getElementById("destacado-enlace");
+    const contenedorImagen = document.querySelector(".destacado-imagen");
 
     try {
         const { data, error } = await supabaseClient
             .from("articulos")
-            .select("id, titulo, resumen, creado_en")
+            .select("id, titulo, resumen, creado_en, imagen_url")
             .eq("estado", "publicado")
             .order("creado_en", { ascending: false })
             .limit(1)
@@ -34,6 +38,13 @@ async function cargarDestacado() {
 
         enlace.href = "leer-articulo.html?id=" + encodeURIComponent(data.id);
 
+        if (data.imagen_url) {
+            contenedorImagen.style.backgroundImage =
+                `url("${data.imagen_url}")`;
+            contenedorImagen.style.backgroundSize = "cover";
+            contenedorImagen.style.backgroundPosition = "center";
+        }
+
     } catch (error) {
         console.error("Error al cargar el destacado:", error);
         titulo.textContent = "No se pudo cargar la publicación destacada.";
@@ -42,9 +53,9 @@ async function cargarDestacado() {
     }
 }
 
-
-
-
+// =====================================
+// CARGAR PUBLICACIONES
+// =====================================
 
 async function cargarPublicaciones() {
     try {
@@ -59,14 +70,16 @@ async function cargarPublicaciones() {
         grillaArticulos.innerHTML = "";
 
         if (!data || data.length === 0) {
-            grillaArticulos.textContent = "Todavía no hay publicaciones disponibles.";
+            grillaArticulos.textContent =
+                "Todavía no hay publicaciones disponibles.";
             return;
         }
 
-        data.forEach(function(articulo, indice) {
+        data.forEach(function (articulo, indice) {
             const tarjeta = document.createElement("article");
             tarjeta.className = "tarjeta-articulo";
 
+            // IMAGEN
             const imagen = document.createElement("div");
             imagen.className = "imagen-tarjeta";
 
@@ -75,6 +88,14 @@ async function cargarPublicaciones() {
 
             imagen.appendChild(numero);
 
+            if (articulo.imagen_url) {
+                imagen.style.backgroundImage =
+                    `url("${articulo.imagen_url}")`;
+                imagen.style.backgroundSize = "cover";
+                imagen.style.backgroundPosition = "center";
+            }
+
+            // CONTENIDO
             const contenido = document.createElement("div");
             contenido.className = "contenido-tarjeta";
 
@@ -90,22 +111,25 @@ async function cargarPublicaciones() {
 
             const fecha = document.createElement("span");
             fecha.className = "fecha-articulo";
-            fecha.textContent = new Date(articulo.creado_en).toLocaleDateString("es-AR");
+            fecha.textContent =
+                new Date(articulo.creado_en).toLocaleDateString("es-AR");
 
             contenido.appendChild(categoria);
             contenido.appendChild(titulo);
             contenido.appendChild(resumen);
             contenido.appendChild(fecha);
 
-            
             tarjeta.appendChild(imagen);
             tarjeta.appendChild(contenido);
 
-            // Permitir abrir el artículo
+            // ABRIR ARTÍCULO
             tarjeta.style.cursor = "pointer";
             tarjeta.setAttribute("tabindex", "0");
             tarjeta.setAttribute("role", "link");
-            tarjeta.setAttribute("aria-label", "Leer artículo: " + articulo.titulo);
+            tarjeta.setAttribute(
+                "aria-label",
+                "Leer artículo: " + articulo.titulo
+            );
 
             function abrirArticulo() {
                 window.location.href =
@@ -114,7 +138,7 @@ async function cargarPublicaciones() {
 
             tarjeta.addEventListener("click", abrirArticulo);
 
-            tarjeta.addEventListener("keydown", function(event) {
+            tarjeta.addEventListener("keydown", function (event) {
                 if (event.key === "Enter" || event.key === " ") {
                     event.preventDefault();
                     abrirArticulo();
@@ -122,16 +146,18 @@ async function cargarPublicaciones() {
             });
 
             grillaArticulos.appendChild(tarjeta);
-
-
-
         });
 
     } catch (error) {
         console.error("Error al cargar publicaciones:", error);
-        grillaArticulos.textContent = "No se pudieron cargar las publicaciones.";
+        grillaArticulos.textContent =
+            "No se pudieron cargar las publicaciones.";
     }
 }
+
+// =====================================
+// INICIO
+// =====================================
 
 cargarPublicaciones();
 cargarDestacado();
