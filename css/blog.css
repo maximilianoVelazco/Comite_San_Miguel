@@ -230,3 +230,56 @@
         padding: 18px;
     }
 }
+
+
+
+/* =================================
+   IMÁGENES DE PUBLICACIONES
+================================= */
+
+/* Imagen dentro del artículo completo */
+
+.imagen-portada-articulo {
+    display: block;
+    width: 100%;
+    max-height: 560px;
+    object-fit: cover;
+    object-position: center;
+    margin: 30px 0;
+    border-bottom: 5px solid var(--color-rojo);
+}
+
+/* Imágenes de las tarjetas */
+
+.imagen-tarjeta {
+    height: 220px;
+    min-height: 220px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+/* Imagen del artículo destacado */
+
+.destacado-imagen {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+/* Ajustes para celulares */
+
+@media (max-width: 768px) {
+
+    .imagen-portada-articulo {
+        max-height: 350px;
+    }
+
+    .imagen-tarjeta {
+        height: 190px;
+        min-height: 190px;
+    }
+
+}
