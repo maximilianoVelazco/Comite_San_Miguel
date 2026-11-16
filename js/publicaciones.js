@@ -1,6 +1,51 @@
 const grillaArticulos = document.getElementById("grilla-articulos");
 const mensajePublicaciones = document.getElementById("mensaje-publicaciones");
 
+
+
+async function cargarDestacado() {
+    const titulo = document.getElementById("destacado-titulo");
+    const resumen = document.getElementById("destacado-resumen");
+    const fecha = document.getElementById("destacado-fecha");
+    const enlace = document.getElementById("destacado-enlace");
+
+    try {
+        const { data, error } = await supabaseClient
+            .from("articulos")
+            .select("id, titulo, resumen, creado_en")
+            .eq("estado", "publicado")
+            .order("creado_en", { ascending: false })
+            .limit(1)
+            .maybeSingle();
+
+        if (error) throw error;
+
+        if (!data) {
+            titulo.textContent = "Todavía no hay publicaciones";
+            resumen.textContent = "Próximamente compartiremos nuevos artículos.";
+            fecha.textContent = "";
+            enlace.style.display = "none";
+            return;
+        }
+
+        titulo.textContent = data.titulo;
+        resumen.textContent = data.resumen || "";
+        fecha.textContent = new Date(data.creado_en).toLocaleDateString("es-AR");
+
+        enlace.href = "leer-articulo.html?id=" + encodeURIComponent(data.id);
+
+    } catch (error) {
+        console.error("Error al cargar el destacado:", error);
+        titulo.textContent = "No se pudo cargar la publicación destacada.";
+        resumen.textContent = "";
+        enlace.style.display = "none";
+    }
+}
+
+
+
+
+
 async function cargarPublicaciones() {
     try {
         const { data, error } = await supabaseClient
@@ -89,3 +134,4 @@ async function cargarPublicaciones() {
 }
 
 cargarPublicaciones();
+cargarDestacado();
