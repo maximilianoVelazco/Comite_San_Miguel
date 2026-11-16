@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de artículos | Comité San Miguel</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+
+    <header class="encabezado-admin">
+        <div class="contenedor">
+            <h1>COMITÉ SAN MIGUEL</h1>
+            <p>PANEL DE ADMINISTRACIÓN</p>
+        </div>
+    </header>
+
+    <main class="contenedor seccion">
+
+        <section class="bienvenida-admin">
+            <h2>GESTIÓN DE ARTÍCULOS</h2>
+            <p>Administrá las publicaciones del sitio.</p>
+        </section>
+
+        <section class="modulo-admin">
+            <h3>PUBLICACIONES</h3>
+            <p>Desde aquí podrás crear, editar y administrar artículos.</p>
+
+            <button id="btn-nuevo-articulo" class="boton-admin">
+                NUEVO ARTÍCULO
+            </button>
+
+            <div id="lista-articulos">
+                Cargando publicaciones...
+            </div>
+
+            <p id="mensaje-articulos" role="status"></p>
+        </section>
+
+        <p>
+            <a href="admin.html">← VOLVER AL PANEL</a>
+        </p>
+
+    </main>
+
+    <footer class="pie-pagina">
+        <div class="contenedor">
+            <p>COMITÉ SAN MIGUEL</p>
+            <span>ORGANIZACIÓN · SAN MIGUEL · BUENOS AIRES</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-config.js"></script>
+    <script src="../js/admin.js"></script>
+    <script src="../js/articulos.js"></script>
+
+</body>
+</html>

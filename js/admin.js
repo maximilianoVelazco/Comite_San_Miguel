@@ -70,6 +70,14 @@
             });
         }
 
+        const botonArticulos = document.getElementById("btn-articulos");
+
+        if (botonArticulos) {
+            botonArticulos.addEventListener("click", function () {
+                window.location.href = "articulos.html";
+            });
+        }   
+
     } catch (error) {
         console.error("Error al comprobar los permisos:", error);
         window.location.replace("../pages/login.html");
